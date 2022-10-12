@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function hoiten() {
+            let traloi = prompt('Bạn tên gì');
+            alert('Xin chào bạn ' + traloi);
+        }
+        function xacnhanthongtin() {
+            let traloii = confirm('bạn hiểu bài không ?')
+            if (traloii == true) {
+                let s = "OKe ạ!";
+                alert('trả lời' + s);
+            }
+            else { alert('trả lời: MÉo hiểu!'); }
+        }
+    </script>
+    <input type="button" value="hỏi" onclick="xacnhanthongtin()" />
+
+    <input type="button" value="hello" onclick="alert('helooooo')" />
+    <input type="button" value="askname" onclick="hoiten()" />
+
+</body>
+
+</html>
