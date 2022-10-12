@@ -1,2 +1,116 @@
-<h1>some good news is comming!
-</h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table {
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #a11111;
+        }
+
+        tr:nth-child(odd) {
+            background-color: aqua;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>some good news is comming!
+    </h1>
+    <hr />
+    <!-- tạo bảng-->
+    <table border="1" cellpadding="5" cellspacing="1">
+        <tr>
+            <th>#</th>
+            <th>Họ Tên</th>
+            <th>Số điện thoại</th>
+
+        </tr>
+        <tr>
+            <td rowspan="2">1</td>
+            <td>Phạm Linh</td>
+            <td>0987701xxx</td>
+
+        </tr>
+        <tr>
+            <td colspan="1" align="center">Tổng cộng</td>
+            <td style="text-align:center; color:red;">2</td>
+
+        </tr>
+
+
+    </table>
+
+
+    <hr>
+    <!--asynce javasript and XML AJAX
+    FORM-->
+    <h2>Đăng ký</h2>
+    <form action="abc.com" method="get">
+        <fieldset>
+            <legend>Thông tin cá nhân</legend>
+            Name: <input placeholder="nhập họ tên" name="fullname" value="david" /><br>
+            Age:<input type="number" name="age" /><br>
+            phone: <input name="phone" /><br>
+            Email:<input type="email" /><br>
+            Pass:<input type="password" /><br>
+            Gender:<input type="radio" value="male" name="gioitinh" />Nam
+            <input type="radio" value="female" name="gioitinh" checked />Nữ
+
+        </fieldset>
+        <input type="submit" value="Đăng ký" />
+        <input type="reset" value="Xóa sạch" />
+        <br>
+        Sở thích:<input type="checkbox" value="travel" name="sothich" />du lịch
+        <input type="checkbox" value="movie" name="sothich" />xem phim
+        <input type="checkbox" value="Runing" name="sothich" />chạy bộ
+        <!--de nên để name giống nhau-->
+
+    </form>
+    <hr>
+    <form>
+        <h2>Demo Form</h2>
+        <input type="button" onclick="alert('Hello Everybody')" value="click me" />
+        <button type="submit">submit</button>
+        <button type="reset">reset</button>
+        <button type="button" onclick="alert('gọi js giống input')"> Click me</button>
+
+    </form>
+    <hr>
+    <!-- Select và option (tiết kiệm không giam)-->
+    <form method="get" enctype="multipart/form-data">
+        Hoa quả:
+        <select name="hoaqua">
+            <option value="banana"> chuối</option>
+            <option value="aple">táo</option>
+            <option value="pineaple"> dứa</option>
+        </select>
+        <br>
+        Đàn:
+        <select name="theloai" multiple>
+            <option value="piano"> piano</option>
+            <option value="organ">organ</option>
+            <option value="guitar"> guitar</option>
+        </select>
+        <br>
+        Thông tin thêm:<br>
+        <textarea name="thông tin thêm" rows="5" cols="5"></textarea>
+        <br>
+        <!--chèn hình theo file method = post, enctype = multipart/form-data-->
+        Hình
+        <input type="file" name="hình" />
+        <br />
+        <button type="submit">mua</button>
+    </form>
+
+</body>
+
+</html>
