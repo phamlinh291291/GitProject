@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <H1> Tính lãi Suất</H1>
+    Số tiền gửi: <input type="number" name="Total" id="tiengui" />
+    Số năm gửi: <input type="number" name="Years" id="nam" />
+    lãi suất /năm: <input type="number" name="Rate" id="laisuat" /> %
+
+    <br />
+    <hr />
+
+    <button id="bt" onclick="TinhLai()">Tính lãi</button>
+    <button id="bt1">Tiền lãi</button>
+    <button id="bt2">Tổng tiền</button>
+
+    <script>
+        function TinhLai() {
+            tiengui = document.getElementById("tiengui").value;
+            nam = document.getElementById("nam").value;
+            laisuat = document.getElementById("laisuat").value;
+            if (tiengui != "" && nam != "" && laisuat != "") {
+                TienLai = (nam * (tiengui * (laisuat / 100))).toPrecision(4);
+                Total = ((parseFloat(TienLai) + parseFloat(tiengui))).toPrecision(4);
+                document.getElementById("bt2").innerHTML = "Tổng tiền: " + Total;
+                document.getElementById("bt1").innerHTML = "Tiền lãi " + TienLai;
+
+            }
+            else {
+                alert("nhập số liệu để tính!")
+            }
+        }
+    </script>
+
+
+
+</body>
+
+</html>
