@@ -19,8 +19,8 @@
     <hr />
 
     <button id="bt" onclick="TinhLai()">Tính lãi</button>
-    <button id="bt1">Tiền lãi</button>
-    <button id="bt2">Tổng tiền</button>
+    <button id="bt1">Tiền lãi: 0</button>
+    <button id="bt2">Tổng tiền: 0</button>
 
     <script>
         function TinhLai() {
@@ -28,10 +28,10 @@
             nam = document.getElementById("nam").value;
             laisuat = document.getElementById("laisuat").value;
             if (tiengui != "" && nam != "" && laisuat != "") {
-                TienLai = (nam * (tiengui * (laisuat / 100))).toPrecision(4);
-                Total = ((parseFloat(TienLai) + parseFloat(tiengui))).toPrecision(4);
+                TienLai = parseFloat((nam * (tiengui * (laisuat / 100)))).toPrecision(4);
+                Total = (parseFloat(TienLai) + parseFloat(tiengui)).toPrecision(4);
                 document.getElementById("bt2").innerHTML = "Tổng tiền: " + Total;
-                document.getElementById("bt1").innerHTML = "Tiền lãi " + TienLai;
+                document.getElementById("bt1").innerHTML = "Tiền lãi: " + TienLai;
 
             }
             else {
