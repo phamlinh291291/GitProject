@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="text">
+        <p id="Ten"></p>
+        Em không biết phải nói sao để anh hiểu rằng, em nhớ anh thật nhiều. Em yêu anh đến khi<br />
+        trái tim này tan thành nghìn mảnh. Tất cả những gì em yêu thương, em khát khao và cần<br />
+        đến, chính là anh, mãi mãi về sau. Em chỉ muốn ở bên anh, và anh yêu hỡi, em sẽ trở thành<br />
+        người phụ nữ như anh mong muốn.<br />
+        Có phải em thật tệ hại, khi cứ nghĩ đến anh thật nhiều, thật lâu và nhất là mỗi khi đêm<br />
+        xuống? Em hứa sẽ sẽ cố gắng triệu triệu lần hơn thế. Nhưng hơn tất cả, em chỉ mong một<br />
+        ngày nào đó, anh sẽ tự hào về em, như tự hào về vợ của anh, và mẹ của các con anh (ít<br />
+        nhất là 2 nhé, em vừa mới quyết định đấy!). Em nhớ thật nhiều cảm giác mỗi đêm anh ôm<br />
+        em và ru em ngủ trong vòng tay. Đêm nay, em chỉ muốn được gần bên anh… và anh biết<br />
+        không, trái tim em đang đau đớn đến nhường nào.<br /><br />
+        Anh yêu thương, đừng bao giờ rời xa em nữa nhé. Yêu anh rất nhiều.<br />
+        <p id="diaDiem_thoiGiam"></p>
+    </div>
+    <script>
+        document.getElementById("text").style.fontFamily = "apple-system";
+        document.getElementById("text").style.fontStyle = "italic";
+        document.getElementById("text").style.color = "gray";
+
+        let tenNguoiNhan = prompt("Tên người nhận: ");
+        document.getElementById("Ten").innerHTML = "\"" + tenNguoiNhan + " thương nhớ,";
+
+        let diaDiem = prompt("Địa điểm");
+        let thoiGian = prompt("Thời gian");
+        document.getElementById("diaDiem_thoiGiam").innerHTML = diaDiem + ", " + thoiGian + "." + "\"";
+
+
+    </script>
+
+</body>
+
+</html>

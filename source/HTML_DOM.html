@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body id="body">
+    <button id="btnBlue" type="button" onclick="body_Color('blue');"> Blue</button>
+    <button id="btnRed" type="button" onclick="body_Color('green');">Red</button>
+    <button id="btnGreen" type="button" onclick="body_Color('cyan');">Green</button>
+    <script>
+        function body_Color(id, colorname) {
+            document.g
+            document.getElementById("body").style.backgroundColor = colorname;
+        }
+
+    </script>
+    <!-- <script>
+        function body_Green() {
+            document.getElementById("body").style.backgroundColor = "green";
+        }
+
+    </script>
+    <script>
+        function body_Red() {
+            document.getElementById("body").style.backgroundColor = "red";
+        }
+
+    </script> -->
+
+    <div id="div1">
+        <p>đoạn văn 1</p>
+        <p>đoạn văn 2</p>
+    </div>
+    <script>
+        let myDiv = document.createElement('div');
+        myDiv.innerHTML = 'thẻ div 2';
+        myDiv.style.color = 'blue';
+        document.getElementById("div1").appendChild(myDiv);
+    </script>
+
+    <h3>Tạo Bảng động</h3>
+    <!-- <table>
+        Nhập số dòng:
+        <input type="number" min="1" id="soDong"/>
+        <br/>
+        Nhập số cột;
+        <input type="number" min="1" id="soCot"/>
+        <br/>
+        <button type="button" > Vẽ bảng</button>
+        <button type="button">Xóa bảng </button>
+    </table> -->
+    <div id="ket_qua">
+        <table id="bảng" border="1">
+            <tr>
+                <td>#</td>
+                <td>Họ tên</td>
+            </tr>
+            <thead>
+            <tbody id="noi_dung_bang"></tbody>
+            </thead>
+        </table>
+    </div>
+    <button type="button" onclick="them2Dong()">Thêm 2 dòng</button>
+    <button type="button" onclick="xoaBang()">xóa bảng</button>
+
+    <script>
+        function them2Dong() {
+            let dong = document.createElement("tr");
+            let o_1 = document.createElement("td");
+            let o_2 = document.createElement("td");
+            o_1.innerHTML = "STT";
+            o_2.innerHTML = "Phạm Châu Linh";
+            dong.appendChild(o_1);
+            dong.appendChild(o_2);
+            document.getElementById("noi_dung_bang").appendChild(dong);
+        }
+
+    </script>
+
+    <script>
+        function xoaBang() {
+            document.getElementById("noi_dung_bang").innerHTML = "";
+        }
+
+    </script>
+    <hr />
+    <div id="div2">
+        <p id="p1">đoạn văn 1</p>
+        <p id="p2">đoạn văn 2</p>
+    </div>
+    <script>
+        const p3 = document.createElement("p");
+        p3.innerHTML = "đoạn văn 3";
+        const myDiv2 = document.getElementById("div2");
+        myDiv2.insertBefore(p3, p2);
+        //const p1 = document.getElementById("p2");
+        //p1.remove(p1);
+        const my_div2 = document.getElementById("div2");
+        my_div2.removeChild(p2);
+    </script>
+    <hr />
+
+    <h1 onmouseover="suKienHoChuot()" onmouseleave="suKienRaKhoi()">demo sự kiện</h1>
+    <input id="nhapLieu" type="text" onchange="suKienThayDoi()" />
+    <div id="ketQua" style="padding-bottom:100px;"></div>
+
+    <script>
+        function suKienHoChuot() {
+            document.getElementById("ketQua").innerHTML = "sự kiện rê chuột ";
+
+        }
+        function suKienRaKhoi() {
+            document.getElementById("ketQua").innerHTML = "";
+        }
+        function suKienThayDoi() {
+            document.getElementById("ketQua").innerHTML
+                = "Bạn vừa gõ: " + document.getElementById("nhapLieu").value;
+        }
+
+
+    </script>
+
+    <h1>Kiểm tra chẵn lẻ</h1>
+
+    <input type="number" id="nhapSo" />
+    <button type="button" id="btn1" onclick="laySoCuoi()"> click me</button>
+    <script>
+        function laySoCuoi() {
+            let giaTri_nhapSo = document.getElementById("nhapSo").value;
+            let soCuoi_nhapSo = parseInt(giaTri_nhapSo[giaTri_nhapSo.length - 1]);
+            //document.getElementById("btn1").innerHTML = soCuoi_nhapSo;
+            if (giaTri_nhapSo === "" || giaTri_nhapSo === "e") {
+                alert("vui lòng nhập số!");
+                document.getElementById("btn1").innerHTML = "click me";
+            }
+            else {
+                if (soCuoi_nhapSo % 2 == 0) {
+                    document.getElementById("btn1").innerHTML = soCuoi_nhapSo + ": là số chẵn";
+                }
+                else {
+                    document.getElementById("btn1").innerHTML = soCuoi_nhapSo + ": là số lẻ";
+                }
+            }
+        }
+
+
+
+    </script>
+
+</body>
+
+</html>
