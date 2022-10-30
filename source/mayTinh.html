@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <table>
+
+        <H1>Calculator</H1>
+        <br />
+        <tr>
+            <td colspan="2" style="width: 200px ;">
+                <input type="number" id="soThuNhat" />
+            </td>
+            <td colspan="2" style="width: 200px ;">
+                <input type="number" id="soThuHai" />
+            </td>
+
+        </tr>
+        <tr>
+            <td> <button type="button" id="Addition" onclick="tinhToan('Addition')">Addition</button></td>
+            <td> <button type="button" id="Subtraction" onclick="tinhToan('Subtraction')">Subtraction</button>
+            </td>
+            <td> <button type="button" id="Mutiplication" onclick="tinhToan('Mutiplication')">Mutiplication</button>
+            </td>
+            <td> <button type="button" id="Division" onclick="tinhToan('Division')">Division</button>
+            </td>
+
+        </tr>
+        <br />
+        <br />
+
+
+    </table>
+    <div id="ketQua"></div>
+    <script>
+        function tinhToan(congthuc) {
+            let ket_Qua = 0;
+            let so_ThuNhat = parseFloat(document.getElementById("soThuNhat").value);
+            let so_ThuHai = parseFloat(document.getElementById("soThuHai").value);
+            //document.getElementById("ketQua").innerHTML = congthuc;
+            if (isNaN(so_ThuNhat) || isNaN(so_ThuHai))
+                alert("mời nhập số");
+            else {
+                switch (congthuc) {
+                    case "Addition":
+                        ket_Qua = so_ThuNhat + so_ThuHai;
+                        document.getElementById("ketQua").innerHTML = ket_Qua;
+                        break;
+
+                    case "Subtraction":
+                        ket_Qua = so_ThuNhat - so_ThuHai;
+                        document.getElementById("ketQua").innerHTML = ket_Qua.toFixed(3);
+                        break;
+                    case "Mutiplication":
+                        ket_Qua = so_ThuNhat * so_ThuHai;
+                        document.getElementById("ketQua").innerHTML = ket_Qua;
+                        break;
+                    case "Division":
+                        ket_Qua = so_ThuNhat / so_ThuHai;
+                        document.getElementById("ketQua").innerHTML = ket_Qua.toFixed(3);
+                        break;
+                    default:
+                        document.getElementById("ketQua").innerHTML = "có lỗi trong quá trình xử lý";
+                        break;
+
+                }
+
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>
