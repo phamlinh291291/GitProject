@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <input type="number" id="Dong" />
+    <!-- <input type="number" id="Cot" value="dont use this" /> -->
+    <button onclick="veHinhTamGiac()">clickme</button>
+    <div id="ketQua"></div>
+    <script>
+        // function veHinhChuNhat() {
+        //     let chuoi = ""
+        //     let soDong = parseInt(document.getElementById("Dong").value);
+        //     let soCot = parseInt(document.getElementById("Cot").value);
+
+        //     for (let i = 0; i < soDong; i++) {
+        //         for (let j = 0; j < soCot; j++) {
+        //             chuoi += "*";
+        //         }
+        //         chuoi += "<br>";
+        //     }
+        //     document.getElementById("ketQua").innerHTML = chuoi;
+
+
+        // }
+        function veHinhTamGiac() {
+            let tamGiac = ""
+            let chuoi = "*"
+            let soDong = parseInt(document.getElementById("Dong").value);
+            for (let i = 0; i < soDong; i++) {
+                tamGiac += chuoi;
+
+                for (let j = 0; j <= i; j++) {
+
+
+                }
+            }
+            document.getElementById("ketQua").innerHTML = tamGiac;
+
+
+        }
+
+    </script>
+
+</body>
+
+</html>
