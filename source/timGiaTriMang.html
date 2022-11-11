@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h4>Tìm giá trị mảng</h4>
+    <input id="taoMang" min="1" type="number" />
+    <button id="khoiTao" onclick="taoMang()">Create</button>
+    <input id="giaTriTim" type="number" />
+    <button type="button" onclick="timKiem()">tìm</button>
+    <div id="ketQua"></div>
+
+    <script>
+        let mang = [];
+        function taoMang() {
+            let soPhanTu = parseInt(document.getElementById("taoMang").value);
+            if (isNaN(soPhanTu)) { alert("nhập số để tạo mảng") }
+            else {
+                for (let i = 0; i < soPhanTu; i++) {
+                    mang[i] = Math.floor(Math.random() * 1000);
+
+                }
+                console.log(mang);
+            }
+            document.getElementById("ketQua").innerHTML = mang.join(", ");
+
+        }
+        function timKiem() {
+            let soCanTim = parseInt(document.getElementById("giaTriTim").value);
+            let dem = 0;
+            let traVe = "";
+            if (isNaN(soCanTim)) { alert("nhập số cần tìm") }
+            else {
+                for (let j in mang) {
+                    if (mang[j] === soCanTim) {
+                        traVe += j + ", ";
+                        dem++;
+                        console.log(j);
+                    }
+                }
+
+                if (dem > 0) {
+                    alert(`tìm thấy số ${soCanTim} tại vị trí ${traVe}`);
+                    dem = 0;
+                }
+
+                else {
+                    alert("không tim thấy số " + soCanTim);
+                    dem = 0;
+                }
+            }
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button type="button" onclick="hienThiSo()">hiển thị số</button>
+    <script>
+        function hienThiSo() {
+            let giaTri1 = parseInt(prompt("nhập vào số thứ 1"));
+            let giaTri2 = parseInt(prompt("nhập vào số thứ 2"));
+            function soSanh(pram1, pram2) {
+                if (pram1 > pram2) {
+                    alert(`${pram1} > ${pram2}`);
+                } else { alert(`${pram1 + pram2}`) };
+
+            }
+            soSanh(giaTri1, giaTri2);
+        }
+    </script>
+    <button type="button" onclick="timSao()"> Tìm sao</button>
+    <script>
+        function timSao() {
+            let giaTri = prompt("nhập tên ngôi sao!");
+            let doSearch = false;
+            let Mang = ["polaris", "Alderbaran", "Deneb", "Vega", "altair", "Dubhe", "Regulus"];
+            let mangSao = ["Ursa Minor", "Tarurus", "Cygnus", "Lyra", "Aquila", "Ursa Major", "Leo"];
+            for (let i = 0; i <= Mang.length; i++) {
+                if (giaTri === Mang[i]) {
+                    doSearch = true;
+                    alert(`${mangSao[i]}`);
+                    break;
+                }
+
+            }
+            console.log(doSearch);
+            if (!doSearch) {
+                alert("ko tìm thấy sao");
+            }
+        }
+    </script>
+    <button type="button" onclick="giaiThua()">Tính Giai Thừa</button>
+    <script>
+
+
+        function giaiThua() {
+            var giai_Thua = 1;
+            var soCanTinh = parseInt(prompt("nhập vào số cần tính giai thừa"));
+            for (let i = 1; i <= soCanTinh; i++) {
+                console.log(`giai thừa của ${soCanTinh} = ${giai_Thua} x ${i}`);
+                giai_Thua *= i;
+
+            }
+            alert(`giai thừa của ${soCanTinh} = ${giai_Thua} `);
+        }
+
+
+    </script>
+    <!--                                 tạo mạng ký tự random và tìm kiếm ký tự                             -->
+    <button type="button" onclick="taoMang(),timKiem()">tìm kiếm ký tự </button>
+    <script>
+        let mang = [];
+        const alphabet = "abcdefghijklmnopqrstuvwxyz";
+        function taoMang() {
+
+            for (let i = 0; i < 99; i++) {
+                let randomCharacter = alphabet[Math.floor(Math.random() * alphabet.length)];
+                //tạo 1 biến chứa ký tự ở vị trí random, ở đây.
+                mang[i] = randomCharacter;
+                mang.push(mang[i]);
+
+            }
+            alert("mảng ký tự: " + mang);
+            console.log(mang);
+            console.log(alphabet.length);
+
+        }
+        function timKiem() {
+            let giaTri = (prompt("nhập ký tự cần tìm"))
+
+            let dem = 0;
+            let traVeAlert = []; // tạo mảng này để xuất nội dung ra trên alert
+            for (let j in mang) {
+                if (mang[j] === giaTri) {
+                    traVeAlert.push(j);
+                    dem++;
+                    console.log(j);
+                }
+            }
+            if (dem > 0) {
+                alert(`tìm thấy ký tự "${giaTri}" xuất hiện ${dem} lần, tại vị trí ${traVeAlert.join("; ")}`);
+                dem = 0;
+                mang = [];
+            }
+
+            else {
+                alert("-1");
+                mang = [];
+                dem = 0;
+            }
+        }
+
+
+
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+
+    </script>
+
+
+    <!-- <script>
+        let kiemTra = true;
+        let a = prompt("nhập chuỗi");
+        console.log(a);
+        let layindexTrungTam = 0;
+
+        //  kiểm tra nếu là mảng chẵn -----------------------------------------------
+        if (a.length % 2 == 0) {
+            console.log("là mảng chẵn")
+            let layindexTrungTam = (a.length / 2) - 1;
+            let viTriDoiXung = layindexTrungTam + 1;
+            console.log(a[layindexTrungTam], a[layindexTrungTam + 1]);
+            if (a[layindexTrungTam] !== a[layindexTrungTam + 1]) {
+                alert("không phải chuỗi palindrom");
+                kiemTra = false;
+                layindexTrungTam = 0;
+
+            }
+            else {
+                console.log(a[layindexTrungTam], a[viTriDoiXung]);
+                for (let i = layindexTrungTam; i >= 0; i--) {
+                    if (a[i] === a[viTriDoiXung]) {
+                        console.log(` ${i} - ${a[i]} `, ` ${viTriDoiXung} - ${a[viTriDoiXung]}`);
+                    }
+                    else {
+                        kiemTra = false;
+                        console.log(` ${i} - ${a[i]} `, ` ${viTriDoiXung} - ${a[viTriDoiXung]}`);
+                    }
+                    viTriDoiXung++;
+
+                }
+            }
+
+        }
+        // nếu là mảng lẻ------------------------------------------------
+        else {
+            console.log("là mảng lẻ");
+            layindexTrungTam = Math.floor(a.length / 2);
+            console.log(layindexTrungTam, a[layindexTrungTam]);
+            console.log(layindexTrungTam - 1, layindexTrungTam + 1);
+            if (a[layindexTrungTam - 1] !== a[layindexTrungTam + 1]) {
+                alert("không phải chuỗi palindrom");
+                kiemTra = false;
+                layindexTrungTam = 0;
+
+            }
+            else {
+
+                let viTriDoiXung = layindexTrungTam + 1;
+                for (let i = layindexTrungTam - 1; i >= 0; i--) {
+                    if (a[i] === a[viTriDoiXung]) {
+                        console.log(` ${i} - ${a[i]} `, ` ${viTriDoiXung} - ${a[viTriDoiXung]}`);
+                    }
+                    else {
+                        kiemTra = false;
+                        console.log(` ${i} - ${a[i]} `, ` ${viTriDoiXung} - ${a[viTriDoiXung]}`);
+                    }
+                    viTriDoiXung++;
+
+                }
+            }
+        }
+        console.log(kiemTra);
+        if (kiemTra) {
+            console.log("là chuỗi palindrom");
+            layindexTrungTam = 0;
+        }
+
+    </script> -->
+
+</body>
+
+</html>

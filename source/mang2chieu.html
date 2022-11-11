@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="banCo"></div>
+    <!-- <button type="button" onclick="dienGiaTri(); inBanCo();">CHANGE VALUE</button> -->
+    <button type="button" onclick="timViTriMang(); inMang();">CHANGE VALUE</button>
+    <script>
+        const Dong = 5, Cot = 5;
+        //const mangHaiChieu = new Array(Dong).fill(new Array(Cot));
+        let mangHaiChieu = [];
+        function khoiTaoMang() {
+            for (let i = 0; i < Dong; i++) {
+                mangHaiChieu[i] = new Array(Cot);
+                for (let j = 0; j < Cot; j++)
+                    mangHaiChieu[i][j] = "O";
+
+            }
+            console.log(mangHaiChieu);
+        }
+        function timViTriMang() {
+            let chiSoDong = parseInt(prompt("nhập số dòng"));
+            let chiSoCot = parseInt(prompt("nhập số cột"));
+            mangHaiChieu[chiSoDong][chiSoCot] = "X";
+            console.log(mangHaiChieu);
+        }
+
+        function inMang() {
+            let chuoi = "";
+            for (let i = 0; i < mangHaiChieu.length; i++) {
+
+                for (let j = 0; j < mangHaiChieu[i].length; j++) {
+                    chuoi += mangHaiChieu[i][j] + "&nbsp;&nbsp;";//+ " " + " ";+ "&nbsp;&nbsp;";
+                }
+                chuoi += "<br>";
+            }
+            document.getElementById("banCo").innerHTML = chuoi;
+        }
+
+        khoiTaoMang();
+        inMang();
+
+    </script>
+</body>
+
+</html>

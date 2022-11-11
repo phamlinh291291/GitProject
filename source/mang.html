@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h4>Nhập số</h4>
+    <input id="inPut" type="number" />
+    <button id="btn1" type="button" onclick="themPhanTu()">add</button>
+    <button type="button" id="btn2" onclick="hienThi()">Show array</button>
+    <div id="ketQua"></div>
+    <script>
+        let array = new Array();
+        function themPhanTu() {
+
+            let giaTri = document.getElementById("inPut");
+            if (giaTri !== "") {
+                array.push(parseInt(giaTri.value));
+                giaTri.value = "";
+                giaTri.focus();
+
+            }
+
+        }
+        function hienThi() {
+            let chuoi = "";
+            // for (let i = 0; i < array.length; i++) {
+            //     chuoi += "vị trí: " + i + ":" + array[i] + "<br/>";
+
+            // }
+            for (let i in array) {
+                chuoi += "vị trí: " + i + ":" + array[i] + "<br/>";
+                document.getElementById("ketQua").innerHTML = chuoi;
+            }
+            console.log(array);
+        }
+    </script>
+
+</body>
+
+</html>
