@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div>
+        Dài: <input id="chieuDai" type="number" min="1" /><br>
+        Rộng: <input id="chieuRong" type="number" min="1" /><br>
+        Màu: <input id="mau"><br>
+        <button type="button" onclick="Draw()">Vẽ hình</button>
+        <button type="button" onclick="tinhToan()">Tính</button>
+        <div id="ketQua"></div>
+        <canvas id="myCanvas" width="800" height="600" style="border: 1px solid blue;"></canvas>
+        <script>
+            class hinhChuNhat {
+                constructor(cDai, cRong, color) {
+                    this.cDai = cDai;
+                    this.cRong = cRong;
+                    this.color = color;
+                }
+                tinhDienTich() {
+                    return this.cDai * this.cRong;
+                }
+                tinhChuVi() {
+                    return (this.cDai + this.cRong) * 2;
+                }
+
+                draw() {
+                    let c = document.getElementById("myCanvas");
+                    let ctx = c.getContext("2d");
+                    ctx.fillStyle = this.color;
+                    ctx.fillRect(20, 50, this.cDai, this.cRong);
+
+                }
+
+            }
+            let HCN;
+            let width = 1;
+            let height = 1;
+            let mau = "";
+            function layThongSo() {
+                width = parseFloat(document.getElementById("chieuDai").value);
+                console.log(width);
+                height = parseFloat(document.getElementById("chieuRong").value);
+                console.log(height);
+                mau = document.getElementById("mau").value;
+                console.log(mau);
+                HCN = new hinhChuNhat(width, height, mau);
+                console.log(HCN);
+            }
+
+            function tinhToan() {
+                layThongSo();
+                document.getElementById("ketQua").innerHTML = `hỉnh chữ nhật của bạn có: <br/>diện tích = ${HCN.tinhDienTich()} <br/> chu vi = ${HCN.tinhChuVi()}`;
+            }
+            function Draw() {
+                layThongSo();
+                HCN.draw();
+            }
+
+
+
+
+
+        </script>
+
+</body>
+
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <fieldset>
+        <legend>Thêm học viên</legend>
+        <table>
+            <tr>
+                <td>Họ tên</td>
+                <td>
+                    <input id="hoTen" />
+                </td>
+            </tr>
+            <tr>
+                <td>Số điện thoại</td>
+                <td>
+                    <input id="soDienThoai" />
+                </td>
+            </tr>
+            <tr>
+                <td>Giới tính</td>
+                <td>
+                    <input type="radio" name="gioiTinh" value="1" checked id="gtNu">Nữ
+                    <input type="radio" name="gioiTinh" value="0" id="gtNam">Nam
+                </td>
+            </tr>
+            <tr>
+                <td>Điểm</td>
+                <td>
+                    <input type="number" min="0" max="10" id="diem" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="button" onclick="themMoiHocVien()">Thêm mới</button>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+    <fieldset>
+        <legend>Danh sách học viên</legend>
+        <button type="button" onclick="hienThiDanhSachHocVien()">Lấy danh sách</button>
+        <table border="1" cellpadding="5" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Họ tên</th>
+                    <th>Số điện thoại</th>
+                    <th>Giới tính</th>
+                    <th>Điểm</th>
+                </tr>
+            </thead>
+            <tbody id="ketQua"></tbody>
+        </table>
+    </fieldset>
+    <script>
+        const DS_HOC_VIEN_KEY = "dsHocVien";
+        function docThongTinHocVienTuLocalStorage() {
+            try {
+                let dsHocVien = localStorage.getItem(DS_HOC_VIEN_KEY);
+                if (dsHocVien === null) {
+                    return [];
+                } else {
+                    return JSON.parse(dsHocVien);
+                }
+            } catch (e) {
+                console.log(e)
+                return [];
+            }
+        }
+        function kiemTraTonTai() {
+            let dsHocVien = docThongTinHocVienTuLocalStorage();
+            let ho_ten = document.getElementById("hoTen").value;
+            let so_dien_thoai = document.getElementById("soDienThoai").value;
+            let gioi_tinh = document.getElementById("gtNam").checked;
+            for (let i = 0; i <= dsHocVien.length; i++) {
+                if (ho_ten === dsHocVien[i].hoTen && so_dien_thoai === dsHocVien[i].soDienThoai) {
+                    //alert(`đã tồn tại học viên ${ho_ten} với số điện thoại ${so_dien_thoai}`);
+                    return true;
+                }
+
+            }
+            return false;
+
+        }
+        function themMoiHocVien() {
+            if (kiemTraTonTai()) {
+                alert(`đã tồn tại học viên ${document.getElementById("hoTen").value} với số điện thoại ${document.getElementById("soDienThoai").value}`);
+                document.getElementById("hoTen").value = "";
+                document.getElementById("soDienThoai").value = "";
+            }
+            else {
+                // tạo đối tượng học viên
+                let hocVien = {
+                    hoTen: document.getElementById("hoTen").value,
+                    soDienThoai: document.getElementById("soDienThoai").value,
+                    nam: document.getElementById("gtNam").checked,
+                    diem: parseFloat(document.getElementById("diem").value)
+                };
+                console.log(hocVien);
+
+                //lấy danh sách học viên từ localStorage
+                let dsHocVien = docThongTinHocVienTuLocalStorage();
+                // tìm dựa vào số điện thoại xem học viên đã có trong danh sách hay chưa
+                // thêm vào mảng các học viên
+                dsHocVien.push(hocVien);
+
+                // ghi mảng học viên vào localStorage
+                localStorage.setItem(DS_HOC_VIEN_KEY, JSON.stringify(dsHocVien));
+            }
+
+        }
+
+        function hienThiDanhSachHocVien() {
+            //lấy danh sách học viên từ localStorage
+            document.getElementById("ketQua").innerHTML = "";
+
+            let dsHocVien = docThongTinHocVienTuLocalStorage();
+            console.log(dsHocVien);
+            //let chuoi =document.getElementById("ketQua").innerHTML;
+            let stt = 0;
+            for (let i = 0; i <= dsHocVien.length; i++) {
+                stt++;
+                let dong = document.createElement("tr");
+                let o_1 = document.createElement("td");
+                o_1.innerHTML += stt;
+                let o_2 = document.createElement("td");
+                o_2.innerHTML = dsHocVien[i]["hoTen"];
+                console.log(o_2.innerHTML);
+                let o_3 = document.createElement("td");
+                o_3.innerHTML = dsHocVien[i].soDienThoai;
+                let o_4 = document.createElement("td");
+                o_4.innerHTML = dsHocVien[i].nam;
+                let o_5 = document.createElement("td");
+                o_5.innerHTML = dsHocVien[i].diem;
+                dong.appendChild(o_1);
+                dong.appendChild(o_2);
+                dong.appendChild(o_3);
+                dong.appendChild(o_4);
+                dong.appendChild(o_5);
+                document.getElementById("ketQua").appendChild(dong);
+            }
+        }
+    </script>
+    </script>
+</body>
+
+</html>

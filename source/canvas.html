@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <h4>vẽ Hình Chữ Nhật</h4>
+    <canvas id="myCanvas" width="800" height="600" style="border:1px solid blueviolet ">
+        Does not support canavas</canvas>
+
+    <script>
+        let c = document.getElementById("myCanvas");
+        let ctx = c.getContext("2d");
+
+        // ctx.beginPath();
+        // ctx.moveTo(40, 40);
+        // ctx.lineTo(500, 500);
+        // ctx.stroke();
+        // ctx.strokeStyle = "red";
+        let grd = ctx.createLinearGradient(40, 40, (Math.random() * 200), (Math.random() * 500));
+        grd.addColorStop(0, "red");
+        grd.addColorStop(1, "blue");
+        ctx.font = "65px Times New Roman";
+        ctx.fillStyle = "blue";
+        ctx.fillText("HAPPY TEACHER DAY!!!", 10, 100);
+
+        //ctx.fillRect(40, 40, 500, 500);
+        // function veHinhChuNhat() {
+        //     ctx.clearRect(0, 0, c.width, c.height);
+        //     let x = 50 + Math.random() * 400;
+        //     let y = 50 + Math.random() * 250;
+        //     ctx.beginPath();
+        //     ctx.fillStyle = grd;
+        //     ctx.fillRect(x - 30, y - 3, x + 30, y + 30);
+        // }
+        // let myInt= setInterval(veHinhChuNhat, 1000);
+        // function stopDraw()
+        // {
+        //    clearInterval(myInt);
+        // }
+        let imageObj = new Image();
+        imageObj.onload = function () {
+            ctx.drawImage(imageObj, 200, 200);
+
+        }
+        imageObj.src = "https://images.squarespace-cdn.com/content/v1/574dd66227d4bdb54a2f65e3/1593660173250-5NWPJC29QITVGEI60THH/BL_About_BL_V2.jpg?format=300w";
+
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+
+<body>
+    <script>
+        class Car {
+            constructor(name = "", model = "", year = 2022, price = 800) {
+                this.brandName = name;
+                this.model = model;
+                this.year = year;
+                this.price = price;
+            }
+            // method
+            toString() {
+                return `${this.brandName} car, model ${this.model}, year ${this.year}`;
+            }
+        }
+
+        // Object
+
+        // let bmw = new Car("BMW", "I20", 2020);
+        // let kia = new Car("Kia", "k5", 2021);
+        // console.log(bmw.toString());
+        // console.log(kia.toString());
+        let cars = [];
+        let xeGd = new Car("BWM", "I20", 2023, 1290);
+        cars.push(xeGd);
+        cars.push(new Car("Mercedes", "K300", 2022, 2000));
+        cars.push(new Car("Mazda", "Cx8", 2022, 1600));
+        let sum = 0;
+        for (let i in cars) {
+            console.log(cars[i].toString());
+            sum += cars[i].price;
+        }
+        console.log(`tổng tiền = ${sum}`);
+    </script>
+    <script>
+        class Circle {
+            constructor(radius = "", color = "") {
+                this.banKinh = radius;
+                this.mauSac = color;
+            }
+            getRadius() {
+                console.log(`bán kính = ${this.banKinh}`);
+            }
+            getArea() {
+                return (Math.PI * this.banKinh * this.banKinh);
+            }
+        }
+        let duongTron = new Circle(6, "Blue");
+        console.log(duongTron.getArea());
+        duongTron.getRadius();
+
+    </script>
+    )
+</body>
+
+</html>
