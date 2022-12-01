@@ -15,13 +15,13 @@
             <tr>
                 <td>Họ tên</td>
                 <td>
-                    <input id="hoTen" />
+                    <input id="hoTen" oninput="timKiemHocVien()" class="inputinfo" />
                 </td>
             </tr>
             <tr>
                 <td>Số điện thoại</td>
                 <td>
-                    <input id="soDienThoai" />
+                    <input id="soDienThoai" class="inputinfo" />
                 </td>
             </tr>
             <tr>
@@ -34,12 +34,14 @@
             <tr>
                 <td>Điểm</td>
                 <td>
-                    <input type="number" min="0" max="10" id="diem" />
+                    <input type="number" min="0" max="10" id="diem" class="inputinfo" />
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
                     <button type="button" onclick="themMoiHocVien()">Thêm mới</button>
+                    <button type="button" onclick="kiemTraTonTai()">check</button>
+                    <button type="button" onclick="timKiemHocVien()">find student</button>
                 </td>
             </tr>
         </table>
@@ -61,7 +63,18 @@
         </table>
     </fieldset>
     <script>
-        const DS_HOC_VIEN_KEY = "dsHocVien";
+        const DS_HOC_VIEN_KEY = "dsHocVien"; 4
+        class HocVien {
+            constructor(hoTen, soDienThoai, gioiTinh, diem) {
+                this.hoTen = hoTen;
+                this.soDienThoai = soDienThoai;
+                this.gioiTinh = gioiTinh;
+                this.diem = diem;
+
+
+            }
+
+        }
         function docThongTinHocVienTuLocalStorage() {
             try {
                 let dsHocVien = localStorage.getItem(DS_HOC_VIEN_KEY);
@@ -75,36 +88,61 @@
                 return [];
             }
         }
+
         function kiemTraTonTai() {
             let dsHocVien = docThongTinHocVienTuLocalStorage();
-            let ho_ten = document.getElementById("hoTen").value;
-            let so_dien_thoai = document.getElementById("soDienThoai").value;
-            let gioi_tinh = document.getElementById("gtNam").checked;
-            for (let i = 0; i <= dsHocVien.length; i++) {
-                if (ho_ten === dsHocVien[i].hoTen && so_dien_thoai === dsHocVien[i].soDienThoai) {
-                    //alert(`đã tồn tại học viên ${ho_ten} với số điện thoại ${so_dien_thoai}`);
-                    return true;
-                }
+            let ho_Ten = document.getElementById("hoTen").value;
+            let so_Dien_Thoai = document.getElementById("soDienThoai").value;
+            let check;
+            for (let i = 0; i < dsHocVien.length; i++) {
+                if (dsHocVien[i].hoTen === ho_Ten && dsHocVien[i].soDienThoai === so_Dien_Thoai) {
+                    //console.log(i, dsHocVien[i].hoTen);
+                    check = true;
+                } else check = false;
+
 
             }
-            return false;
+
+            return check;
+        }
+        function timKiemHocVien() {
+            let dsHocVien = docThongTinHocVienTuLocalStorage();
+            let str = document.getElementById("hoTen").value;
+            console.log(str);
+            let j = 0;
+            for (let i = 0; i < dsHocVien.length; i++) {
+                //let str1 = dsHocVien[i].hoTen[0];
+                //console.log(str1);
+                // for (let j = 0; i < dsHocVien[i].hoTen.length; j++) {
+                let str1 = dsHocVien[i].hoTen[0];
+                console.log(str1);
+                if (str === str1) {
+                    console.log(str, i, "--", str1);
+
+                }
+                //}
+            }
+
+
 
         }
         function themMoiHocVien() {
+            console.log(kiemTraTonTai());
             if (kiemTraTonTai()) {
                 alert(`đã tồn tại học viên ${document.getElementById("hoTen").value} với số điện thoại ${document.getElementById("soDienThoai").value}`);
-                document.getElementById("hoTen").value = "";
-                document.getElementById("soDienThoai").value = "";
+                document.getElementsByClassName("inputinfo").value = "";
             }
             else {
+                let hocVien = new HocVien(
+                    document.getElementById("hoTen").value,
+                    document.getElementById("soDienThoai").value,
+                    document.getElementById("gtNam").checked,
+                    parseFloat(document.getElementById("diem").value)
+                );
+
                 // tạo đối tượng học viên
-                let hocVien = {
-                    hoTen: document.getElementById("hoTen").value,
-                    soDienThoai: document.getElementById("soDienThoai").value,
-                    nam: document.getElementById("gtNam").checked,
-                    diem: parseFloat(document.getElementById("diem").value)
-                };
-                console.log(hocVien);
+
+                //console.log(hocVien);
 
                 //lấy danh sách học viên từ localStorage
                 let dsHocVien = docThongTinHocVienTuLocalStorage();
@@ -112,32 +150,34 @@
                 // thêm vào mảng các học viên
                 dsHocVien.push(hocVien);
 
+
                 // ghi mảng học viên vào localStorage
                 localStorage.setItem(DS_HOC_VIEN_KEY, JSON.stringify(dsHocVien));
+                document.getElementsByClassName("inputinfo").value = "";
             }
-
         }
+
+
 
         function hienThiDanhSachHocVien() {
             //lấy danh sách học viên từ localStorage
             document.getElementById("ketQua").innerHTML = "";
-
             let dsHocVien = docThongTinHocVienTuLocalStorage();
-            console.log(dsHocVien);
+            //console.log(dsHocVien);
             //let chuoi =document.getElementById("ketQua").innerHTML;
             let stt = 0;
-            for (let i = 0; i <= dsHocVien.length; i++) {
+            for (let i = 0; i < dsHocVien.length; i++) {
                 stt++;
                 let dong = document.createElement("tr");
                 let o_1 = document.createElement("td");
                 o_1.innerHTML += stt;
                 let o_2 = document.createElement("td");
-                o_2.innerHTML = dsHocVien[i]["hoTen"];
+                o_2.innerHTML = dsHocVien[i].hoTen;
                 console.log(o_2.innerHTML);
                 let o_3 = document.createElement("td");
                 o_3.innerHTML = dsHocVien[i].soDienThoai;
                 let o_4 = document.createElement("td");
-                o_4.innerHTML = dsHocVien[i].nam;
+                o_4.innerHTML = dsHocVien[i].gioiTinh;
                 let o_5 = document.createElement("td");
                 o_5.innerHTML = dsHocVien[i].diem;
                 dong.appendChild(o_1);
@@ -148,7 +188,6 @@
                 document.getElementById("ketQua").appendChild(dong);
             }
         }
-    </script>
     </script>
 </body>
 
