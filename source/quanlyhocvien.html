@@ -63,7 +63,8 @@
         </table>
     </fieldset>
     <script>
-        const DS_HOC_VIEN_KEY = "dsHocVien"; 4
+        const DS_HOC_VIEN_KEY = "dsHocVien";
+        const DS_HOC_VIEN_KEY_TEMP = "tempKey"
         class HocVien {
             constructor(hoTen, soDienThoai, gioiTinh, diem) {
                 this.hoTen = hoTen;
@@ -75,9 +76,9 @@
             }
 
         }
-        function docThongTinHocVienTuLocalStorage() {
+        function docThongTinHocVienTuLocalStorage(key) {
             try {
-                let dsHocVien = localStorage.getItem(DS_HOC_VIEN_KEY);
+                let dsHocVien = localStorage.getItem(key);
                 if (dsHocVien === null) {
                     return [];
                 } else {
@@ -90,7 +91,7 @@
         }
 
         function kiemTraTonTai() {
-            let dsHocVien = docThongTinHocVienTuLocalStorage();
+            let dsHocVien = docThongTinHocVienTuLocalStorage(DS_HOC_VIEN_KEY);
             let ho_Ten = document.getElementById("hoTen").value;
             let so_Dien_Thoai = document.getElementById("soDienThoai").value;
             let check;
@@ -105,25 +106,45 @@
 
             return check;
         }
+        function demDoDaiIpt() {
+            let doDai = document.getElementById("hoTen").value.length;
+            return doDai;
+        }
         function timKiemHocVien() {
-            let dsHocVien = docThongTinHocVienTuLocalStorage();
+            let dem = demDoDaiIpt();
+            console.log(dem);
+            let dsHocVien = docThongTinHocVienTuLocalStorage(DS_HOC_VIEN_KEY);
             let str = document.getElementById("hoTen").value;
+            let arrIpt = [];
+            arrIpt.push(str);
+            let str1 = "";
+            let dsHocVienTimDuoc = [];
+            let check;
             console.log(str);
-            let j = 0;
-            for (let i = 0; i < dsHocVien.length; i++) {
-                //let str1 = dsHocVien[i].hoTen[0];
-                //console.log(str1);
-                // for (let j = 0; i < dsHocVien[i].hoTen.length; j++) {
-                let str1 = dsHocVien[i].hoTen[0];
-                console.log(str1);
-                if (str === str1) {
-                    console.log(str, i, "--", str1);
+            for (let j in dsHocVien) {
+                let timViTriDauTien = dsHocVien[j].hoTen.search(str);
+                for (let i = 0; i <= dem; i++) {
 
+                    str1 = dsHocVien[j].hoTen.substr(timViTriDauTien, i);
+                    //console.log(i, str, "==", str1);
+                    if (str1 === str) {
+                        //ketQua.push(dsHocVien[j].hoTen);
+                        dsHocVienTimDuoc.push(dsHocVien[j]);
+                        check = true;
+                        console.log(j, check, dsHocVienTimDuoc);
+                        dem = demDoDaiIpt();
+                        localStorage.setItem(DS_HOC_VIEN_KEY_TEMP, JSON.stringify(dsHocVienTimDuoc));
+
+                    }
+
+                    dsHocVienTimDuoc = [];
                 }
-                //}
+                check = false;
+                //console.log(check);
             }
+            function hienThiTimKiem() {
 
-
+            }
 
         }
         function themMoiHocVien() {
@@ -145,7 +166,7 @@
                 //console.log(hocVien);
 
                 //lấy danh sách học viên từ localStorage
-                let dsHocVien = docThongTinHocVienTuLocalStorage();
+                let dsHocVien = docThongTinHocVienTuLocalStorage(DS_HOC_VIEN_KEY);
                 // tìm dựa vào số điện thoại xem học viên đã có trong danh sách hay chưa
                 // thêm vào mảng các học viên
                 dsHocVien.push(hocVien);
@@ -153,7 +174,7 @@
 
                 // ghi mảng học viên vào localStorage
                 localStorage.setItem(DS_HOC_VIEN_KEY, JSON.stringify(dsHocVien));
-                document.getElementsByClassName("inputinfo").value = "";
+
             }
         }
 
