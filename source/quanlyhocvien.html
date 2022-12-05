@@ -8,20 +8,21 @@
     <title>Document</title>
 </head>
 
-<body>
+<body onload="khoiDong()">
     <fieldset>
         <legend>Thêm học viên</legend>
-        <table>
+        <table id="table1">
             <tr>
                 <td>Họ tên</td>
                 <td>
-                    <input id="hoTen" oninput="timKiemHocVien()" class="inputinfo" />
+                    <input id="hoTen" oninput="timKiemHocVienTheoTen()" class="inputinfo" />
                 </td>
+
             </tr>
             <tr>
                 <td>Số điện thoại</td>
                 <td>
-                    <input id="soDienThoai" class="inputinfo" />
+                    <input id="soDienThoai" oninput="timKiemHocVienTheoSDT()" type="number" class="inputinfo" />
                 </td>
             </tr>
             <tr>
@@ -39,7 +40,7 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <button type="button" onclick="themMoiHocVien()">Thêm mới</button>
+                    <button type="button" id="themMoi" onclick="themMoiHocVien()">Thêm mới</button>
                     <button type="button" onclick="kiemTraTonTai()">check</button>
                     <button type="button" onclick="timKiemHocVien()">find student</button>
                 </td>
@@ -51,20 +52,24 @@
         <button type="button" onclick="hienThiDanhSachHocVien()">Lấy danh sách</button>
         <table border="1" cellpadding="5" cellspacing="0">
             <thead>
-                <tr>
+                <tr id="tr1">
                     <th>STT</th>
+                    <th>INDEX</th>
                     <th>Họ tên</th>
                     <th>Số điện thoại</th>
                     <th>Giới tính</th>
                     <th>Điểm</th>
+                    <th colspan="2">Chỉnh sửa</th>
                 </tr>
             </thead>
-            <tbody id="ketQua"></tbody>
+            <tbody id="ketQua" style="width:100% ;overflow-y: scroll;"></tbody>
         </table>
     </fieldset>
     <script>
         const DS_HOC_VIEN_KEY = "dsHocVien";
-        const DS_HOC_VIEN_KEY_TEMP = "tempKey"
+        const DS_HOC_VIEN_KEY_TEMP = "tempKey";
+        const VT_HOC_VIEN_KEY_TEMP = "tempvitri";
+
         class HocVien {
             constructor(hoTen, soDienThoai, gioiTinh, diem) {
                 this.hoTen = hoTen;
@@ -76,11 +81,28 @@
             }
 
         }
+
+
+        function khoiDong() {
+            document.getElementById("tr1").children[6].style.display = 'none';
+            document.getElementById("tr1").children[1].style.display = 'none';
+
+            document.getElementById("themMoi").style.visibility = false;
+            if (kiemTraRong()) {
+                console.log(kiemTraRong());
+
+            }
+
+
+        }
+
+
         function docThongTinHocVienTuLocalStorage(key) {
             try {
                 let dsHocVien = localStorage.getItem(key);
                 if (dsHocVien === null) {
                     return [];
+
                 } else {
                     return JSON.parse(dsHocVien);
                 }
@@ -90,124 +112,267 @@
             }
         }
 
-        function kiemTraTonTai() {
-            let dsHocVien = docThongTinHocVienTuLocalStorage(DS_HOC_VIEN_KEY);
+        function kiemTraRong() {
             let ho_Ten = document.getElementById("hoTen").value;
             let so_Dien_Thoai = document.getElementById("soDienThoai").value;
-            let check;
-            for (let i = 0; i < dsHocVien.length; i++) {
-                if (dsHocVien[i].hoTen === ho_Ten && dsHocVien[i].soDienThoai === so_Dien_Thoai) {
-                    //console.log(i, dsHocVien[i].hoTen);
-                    check = true;
-                } else check = false;
-
-
+            let diem = document.getElementById("diem").value;
+            if (ho_Ten === "" || so_Dien_Thoai === "" || diem === "") {
+                return true;
             }
+            else false;
+        }
+        let dsHocVien = docThongTinHocVienTuLocalStorage(DS_HOC_VIEN_KEY);
+        function kiemTraHoTenRong() {
+            let ho_Ten = document.getElementById("hoTen").value;
+            if (ho_Ten === "")
+                return true;
+            else return false;
+        }
 
+
+        function kiemTraSDTRong() {
+            let so_Dien_Thoai = document.getElementById("soDienThoai").value.toString();
+            if (so_Dien_Thoai === "")
+                return true;
+            else return false;
+        }
+
+        function kiemTraTonTai() {
+            let check = false;
+            if (!kiemTraRong()) {
+                //let dsHocVien = docThongTinHocVienTuLocalStorage(DS_HOC_VIEN_KEY);
+                let ho_Ten = document.getElementById("hoTen").value;
+                let so_Dien_Thoai = document.getElementById("soDienThoai").value;
+                for (let i = 0; i < dsHocVien.length; i++) {
+                    if (dsHocVien[i].soDienThoai === so_Dien_Thoai) {
+                        console.log(dsHocVien[i].soDienThoai, so_Dien_Thoai);
+                        check = true;
+                        return check;
+                    }
+                }
+            }
             return check;
         }
-        function demDoDaiIpt() {
+
+
+
+
+        function demDoDaiHoTen() {
             let doDai = document.getElementById("hoTen").value.length;
             return doDai;
         }
-        function timKiemHocVien() {
-            let dem = demDoDaiIpt();
-            console.log(dem);
-            let dsHocVien = docThongTinHocVienTuLocalStorage(DS_HOC_VIEN_KEY);
-            let str = document.getElementById("hoTen").value;
-            let arrIpt = [];
-            arrIpt.push(str);
-            let str1 = "";
-            let dsHocVienTimDuoc = [];
-            let check;
-            console.log(str);
-            for (let j in dsHocVien) {
-                let timViTriDauTien = dsHocVien[j].hoTen.search(str);
-                for (let i = 0; i <= dem; i++) {
+        function timKiemHocVienTheoTen() {
+            if (!kiemTraHoTenRong()) {
+                let viTriTimDuoc = [];
+                let dem = demDoDaiHoTen();
+                console.log(dem);
+                //let dsHocVien = docThongTinHocVienTuLocalStorage(DS_HOC_VIEN_KEY);
+                let str = document.getElementById("hoTen").value;
+                let arrIpt = [];
+                arrIpt.push(str);
+                let str1 = "";
+                let dsHocVienTimDuoc = [];
+                let check;
+                console.log(str);
+                for (let j in dsHocVien) {
+                    let timViTriDauTien = dsHocVien[j].hoTen.search(str);
+                    for (let i = 0; i <= dem; i++) {
+                        str1 = (dsHocVien[j].hoTen).substr(timViTriDauTien, i);
+                        //console.log(timViTriDauTien);
+                        if (str1.toLowerCase() === str.toLowerCase()) {
+                            dsHocVienTimDuoc.push(dsHocVien[j]);
+                            viTriTimDuoc.push(j);
+                            console.log(str1.toLowerCase(), str.toLowerCase());
+                            check = true;
+                            localStorage.setItem(DS_HOC_VIEN_KEY_TEMP, JSON.stringify(dsHocVienTimDuoc));
+                            localStorage.setItem(VT_HOC_VIEN_KEY_TEMP, JSON.stringify(viTriTimDuoc));
+                            //console.log(docThongTinHocVienTuLocalStorage(DS_HOC_VIEN_KEY_TEMP));
+                            hienThiTimKiem(viTriTimDuoc);
 
-                    str1 = dsHocVien[j].hoTen.substr(timViTriDauTien, i);
-                    //console.log(i, str, "==", str1);
-                    if (str1 === str) {
-                        //ketQua.push(dsHocVien[j].hoTen);
-                        dsHocVienTimDuoc.push(dsHocVien[j]);
-                        check = true;
-                        console.log(j, check, dsHocVienTimDuoc);
-                        dem = demDoDaiIpt();
-                        localStorage.setItem(DS_HOC_VIEN_KEY_TEMP, JSON.stringify(dsHocVienTimDuoc));
+                        }
+                    }
+
+                }
+                dsHocVienTimDuoc = [];
+                viTriTimDuoc = [];
+                check = false;
+
+            }
+            else {
+                console.log(kiemTraRong());
+                document.getElementById("ketQua").innerHTML = "";
+            }
+        }
+
+        function demDoDaiSDT() {
+            let doDai = document.getElementById("soDienThoai").value.length;
+            return doDai;
+        }
+        function timKiemHocVienTheoSDT() {
+            if (!kiemTraSDTRong()) {
+                let viTriTimDuoc = [];
+                let dem = demDoDaiSDT();
+                console.log(dem);
+                //let dsHocVien = docThongTinHocVienTuLocalStorage(DS_HOC_VIEN_KEY);
+                let str = document.getElementById("soDienThoai").value.toString();
+                let arrIpt = [];
+                arrIpt.push(str);
+                let str1 = "";
+                let dsHocVienTimDuoc = [];
+                let check;
+                console.log(str);
+                for (let j in dsHocVien) {
+                    let timViTriDauTien = dsHocVien[j].soDienThoai.search(str);
+                    for (let i = 0; i <= dem; i++) {
+                        str1 = dsHocVien[j].soDienThoai.toString().substr(timViTriDauTien, i);
+                        if (str1 === str) {
+                            dsHocVienTimDuoc.push(dsHocVien[j]);
+                            viTriTimDuoc.push(j);
+                            console.log(viTriTimDuoc);
+                            check = true;
+                            localStorage.setItem(DS_HOC_VIEN_KEY_TEMP, JSON.stringify(dsHocVienTimDuoc));
+                            localStorage.setItem(VT_HOC_VIEN_KEY_TEMP, JSON.stringify(viTriTimDuoc));
+                            hienThiTimKiem(viTriTimDuoc);
+                        }
 
                     }
 
-                    dsHocVienTimDuoc = [];
                 }
+                dsHocVienTimDuoc = [];
                 check = false;
-                //console.log(check);
-            }
-            function hienThiTimKiem() {
-
-            }
-
-        }
-        function themMoiHocVien() {
-            console.log(kiemTraTonTai());
-            if (kiemTraTonTai()) {
-                alert(`đã tồn tại học viên ${document.getElementById("hoTen").value} với số điện thoại ${document.getElementById("soDienThoai").value}`);
-                document.getElementsByClassName("inputinfo").value = "";
+                console.log(check);
             }
             else {
-                let hocVien = new HocVien(
-                    document.getElementById("hoTen").value,
-                    document.getElementById("soDienThoai").value,
-                    document.getElementById("gtNam").checked,
-                    parseFloat(document.getElementById("diem").value)
-                );
-
-                // tạo đối tượng học viên
-
-                //console.log(hocVien);
-
-                //lấy danh sách học viên từ localStorage
-                let dsHocVien = docThongTinHocVienTuLocalStorage(DS_HOC_VIEN_KEY);
-                // tìm dựa vào số điện thoại xem học viên đã có trong danh sách hay chưa
-                // thêm vào mảng các học viên
-                dsHocVien.push(hocVien);
-
-
-                // ghi mảng học viên vào localStorage
-                localStorage.setItem(DS_HOC_VIEN_KEY, JSON.stringify(dsHocVien));
-
+                console.log(kiemTraRong());
+                document.getElementById("ketQua").innerHTML = "";
             }
         }
 
 
+
+
+        function hienThiTimKiem(vi_Tri_Tim_Duoc) {
+            document.getElementById("tr1").children[6].style.display = "";
+            document.getElementById("tr1").children[1].style.display = "";
+            let chuoi = "";
+            let dsHocVienTimDuoc = docThongTinHocVienTuLocalStorage(DS_HOC_VIEN_KEY_TEMP);
+            for (let i = 0; i < dsHocVienTimDuoc.length; i++) {
+                let viTriXoa = ("btnXoa" + i);
+                let vitriSua = ("btnSua" + i);
+                chuoi += `<tr> \n
+                    <td> ${i + 1} </td>
+                    <td> ${vi_Tri_Tim_Duoc[i]} </td>
+                    <td> ${dsHocVienTimDuoc[i].hoTen} </td>
+                    <td> ${dsHocVienTimDuoc[i].soDienThoai}</td>
+                    <td> ${dsHocVienTimDuoc[i].gioiTinh}</td>
+                    <td> ${dsHocVienTimDuoc[i].diem}</td>
+                    <td><button type="button" id=${viTriXoa}  onclick="xoaHocVienTimDuoc(${vi_Tri_Tim_Duoc})">Xóa</button></td>
+                    <td><button type="button" id=${vitriSua} onclick="capNhatHocVienTimDuoc(${vi_Tri_Tim_Duoc})">Sửa</button></td>
+                    <tr>`;
+                document.getElementById("ketQua").innerHTML = chuoi;
+
+            }
+            //console.log(chuoi);
+            //chuoi = "";
+        }
+
+
+        function themMoiHocVien() {
+            if (!kiemTraRong()) {
+                console.log(kiemTraTonTai());
+                if (kiemTraTonTai()) {
+                    alert(`đã tồn tại học viên ${document.getElementById("hoTen").value} với số điện thoại ${document.getElementById("soDienThoai").value}`);
+                    document.getElementById("hoTen").value = "";
+                    document.getElementById("soDienThoai").value = "";
+                    document.getElementById("diem").value = "";
+                }
+                else {
+                    let hocVien = new HocVien(
+                        document.getElementById("hoTen").value,
+                        document.getElementById("soDienThoai").value,
+                        document.getElementById("gtNam").checked,
+                        parseFloat(document.getElementById("diem").value)
+                    );
+                    dsHocVien.push(hocVien);
+                    localStorage.setItem(DS_HOC_VIEN_KEY, JSON.stringify(dsHocVien));
+                    //lấy danh sách học viên từ localStorage
+                    //let dsHocVien = docThongTinHocVienTuLocalStorage(DS_HOC_VIEN_KEY);
+                    // tìm dựa vào số điện thoại xem học viên đã có trong danh sách hay chưa
+                    // thêm vào mảng các học viên
+
+                    // ghi mảng học viên vào localStorage
+                    //localStorage.setItem(DS_HOC_VIEN_KEY, JSON.stringify(dsHocVien));
+
+                }
+                hienThiDanhSachHocVien();
+
+            } else {
+                alert("vui lòng nhập thông tin học viên!");
+            }
+
+        }
+
+        function xoaHocVien(viTriXoa) {
+            let xacNhanXoa = confirm(`bạn có muốn xóa user này ? \n bấm "OK" để xác nhận.`);
+            if (xacNhanXoa == true) {
+                dsHocVien.splice(viTriXoa, 1);
+                localStorage.setItem(DS_HOC_VIEN_KEY, JSON.stringify(dsHocVien));
+                console.log("vị trí thật trong danh sách HV", viTriXoa, dsHocVien[viTriXoa]);
+                console.log(xacNhanXoa);
+            } else {
+                console.log("vị trí thật trong danh sách HV", viTriXoa, dsHocVien[viTriXoa]);
+
+                console.log(xacNhanXoa);
+            }
+            hienThiDanhSachHocVien();
+            console.log(dsHocVien);
+        }
+        function xoaHocVienTimDuoc(viTriXoa) {
+            let dsHocVienTimDuoc = docThongTinHocVienTuLocalStorage(DS_HOC_VIEN_KEY_TEMP);
+            let xacNhanXoa = confirm(`bạn có muốn xóa user này ? \n bấm "OK" để xác nhận.`);
+            if (xacNhanXoa == true) {
+                for (let i in dsHocVienTimDuoc) {
+                    //dsHocVienTimDuoc.splice(i, 1);
+                    //dsHocVien.splice(viTriXoa, 1);
+
+                    //localStorage.setItem(DS_HOC_VIEN_KEY, JSON.stringify(dsHocVien));
+                    console.log("vị trí thật trong danh sách HV", viTriXoa, i);
+                    console.log(xacNhanXoa);
+                }
+
+            } else {
+                console.log(xacNhanXoa);
+            }
+            hienThiTimKiem();
+            console.log(dsHocVien);
+        }
 
         function hienThiDanhSachHocVien() {
             //lấy danh sách học viên từ localStorage
-            document.getElementById("ketQua").innerHTML = "";
-            let dsHocVien = docThongTinHocVienTuLocalStorage();
+            document.getElementById("tr1").children[6].style.display = "";
+            document.getElementById("tr1").children[1].style.display = "none";
+            //let dsHocVien = docThongTinHocVienTuLocalStorage(DS_HOC_VIEN_KEY);
             //console.log(dsHocVien);
             //let chuoi =document.getElementById("ketQua").innerHTML;
-            let stt = 0;
+            let viTriXoa;
+            let vitriSua;
+            let chuoi = "";
             for (let i = 0; i < dsHocVien.length; i++) {
-                stt++;
-                let dong = document.createElement("tr");
-                let o_1 = document.createElement("td");
-                o_1.innerHTML += stt;
-                let o_2 = document.createElement("td");
-                o_2.innerHTML = dsHocVien[i].hoTen;
-                console.log(o_2.innerHTML);
-                let o_3 = document.createElement("td");
-                o_3.innerHTML = dsHocVien[i].soDienThoai;
-                let o_4 = document.createElement("td");
-                o_4.innerHTML = dsHocVien[i].gioiTinh;
-                let o_5 = document.createElement("td");
-                o_5.innerHTML = dsHocVien[i].diem;
-                dong.appendChild(o_1);
-                dong.appendChild(o_2);
-                dong.appendChild(o_3);
-                dong.appendChild(o_4);
-                dong.appendChild(o_5);
-                document.getElementById("ketQua").appendChild(dong);
+                let viTriXoa = ("btnXoa" + i);
+                let vitriSua = ("btnSua" + i);
+                //console.log(viTriXoa, vitriSua);
+                chuoi += `<tr id="dsHocVien${i}"> \n
+                     <td>${i + 1}</td>
+                    <td>${dsHocVien[i].hoTen}</td>
+                    <td>${dsHocVien[i].soDienThoai}</td>
+                    <td>${dsHocVien[i].gioiTinh}</td>
+                    <td>${dsHocVien[i].diem}</td>
+                    <td><button type="button" id="${viTriXoa}" onclick="xoaHocVien(${i})">Xóa</button></td>
+                    <td><button type="button" id="${vitriSua}" onclick="capNhatHocVien(${i})">Sửa</button></td>
+                    </tr>`;
+                document.getElementById("ketQua").innerHTML = chuoi;
             }
+
         }
     </script>
 </body>
