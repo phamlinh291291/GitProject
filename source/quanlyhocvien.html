@@ -42,7 +42,7 @@
                 <td colspan="2">
                     <button type="button" id="themMoi" onclick="themMoiHocVien()">Thêm mới</button>
                     <button type="button" onclick="kiemTraTonTai()">check</button>
-                    <button type="button" onclick="timKiemHocVien()">find student</button>
+                    <button type="button" id="btnCapNhat" onclick="capNhat()">cập nhật</button>
                 </td>
             </tr>
         </table>
@@ -68,7 +68,9 @@
     <script>
         const DS_HOC_VIEN_KEY = "dsHocVien";
         const DS_HOC_VIEN_KEY_TEMP = "tempKey";
-        const VT_HOC_VIEN_KEY_TEMP = "tempvitri";
+        const VT_HOC_VIEN_KEY_TEMP = "tempvitrixoa";
+        const VT_CAP_NHAT_HOC_VIEN = "viTriCapNhat";
+        const VT_XOA_HOC_VIEN = "viTriXoaTimDuoc";
 
         class HocVien {
             constructor(hoTen, soDienThoai, gioiTinh, diem) {
@@ -86,6 +88,7 @@
         function khoiDong() {
             document.getElementById("tr1").children[6].style.display = 'none';
             document.getElementById("tr1").children[1].style.display = 'none';
+            document.getElementById("btnCapNhat").style.display = 'none';
 
             document.getElementById("themMoi").style.visibility = false;
             if (kiemTraRong()) {
@@ -178,11 +181,9 @@
                     let timViTriDauTien = dsHocVien[j].hoTen.search(str);
                     for (let i = 0; i <= dem; i++) {
                         str1 = (dsHocVien[j].hoTen).substr(timViTriDauTien, i);
-                        //console.log(timViTriDauTien);
                         if (str1.toLowerCase() === str.toLowerCase()) {
                             dsHocVienTimDuoc.push(dsHocVien[j]);
                             viTriTimDuoc.push(j);
-                            console.log(str1.toLowerCase(), str.toLowerCase());
                             check = true;
                             localStorage.setItem(DS_HOC_VIEN_KEY_TEMP, JSON.stringify(dsHocVienTimDuoc));
                             localStorage.setItem(VT_HOC_VIEN_KEY_TEMP, JSON.stringify(viTriTimDuoc));
@@ -192,7 +193,8 @@
                         }
                     }
 
-                }
+                } console.log(dsHocVienTimDuoc);
+                console.log(viTriTimDuoc);
                 dsHocVienTimDuoc = [];
                 viTriTimDuoc = [];
                 check = false;
@@ -241,6 +243,7 @@
                 dsHocVienTimDuoc = [];
                 check = false;
                 console.log(check);
+                console.log(viTriTimDuoc);
             }
             else {
                 console.log(kiemTraRong());
@@ -254,6 +257,10 @@
         function hienThiTimKiem(vi_Tri_Tim_Duoc) {
             document.getElementById("tr1").children[6].style.display = "";
             document.getElementById("tr1").children[1].style.display = "";
+
+            //let vi_Tri_Xoa = vi_Tri_Tim_Duoc;
+            // localStorage.setItem(VT_XOA_HOC_VIEN, JSON.stringify(vi_Tri_Xoa));
+
             let chuoi = "";
             let dsHocVienTimDuoc = docThongTinHocVienTuLocalStorage(DS_HOC_VIEN_KEY_TEMP);
             for (let i = 0; i < dsHocVienTimDuoc.length; i++) {
@@ -266,10 +273,11 @@
                     <td> ${dsHocVienTimDuoc[i].soDienThoai}</td>
                     <td> ${dsHocVienTimDuoc[i].gioiTinh}</td>
                     <td> ${dsHocVienTimDuoc[i].diem}</td>
-                    <td><button type="button" id=${viTriXoa}  onclick="xoaHocVienTimDuoc(${vi_Tri_Tim_Duoc})">Xóa</button></td>
-                    <td><button type="button" id=${vitriSua} onclick="capNhatHocVienTimDuoc(${vi_Tri_Tim_Duoc})">Sửa</button></td>
+                    <td><button type="button" id=${viTriXoa}  onclick="xoaHocVienTimDuoc(${vi_Tri_Tim_Duoc[i]})">Xóa</button></td>
+                    <td><button type="button" id=${vitriSua} onclick="capNhatHocVienTimDuoc()">Sửa</button></td>
                     <tr>`;
                 document.getElementById("ketQua").innerHTML = chuoi;
+                //console.log(vi_Tri_Tim_Duoc[0]);
 
             }
             //console.log(chuoi);
@@ -302,8 +310,7 @@
 
                     // ghi mảng học viên vào localStorage
                     //localStorage.setItem(DS_HOC_VIEN_KEY, JSON.stringify(dsHocVien));
-                    ///dddddddddddddddddddddddddddddddd
-                    //hhhhh
+
 
                 }
                 hienThiDanhSachHocVien();
@@ -313,6 +320,34 @@
             }
 
         }
+
+
+        function capNhatHocVien(viTriCapNhat) {
+            let vi_Tri_Cap_Nhat = viTriCapNhat;
+            localStorage.setItem(VT_CAP_NHAT_HOC_VIEN, JSON.stringify(vi_Tri_Cap_Nhat));
+            document.getElementById("btnCapNhat").style.display = '';
+            let ho_Ten = document.getElementById("hoTen").value = dsHocVien[viTriCapNhat].hoTen;
+            let so_Dien_Thoai = document.getElementById("soDienThoai").value = dsHocVien[viTriCapNhat].soDienThoai;
+            let diem = document.getElementById("diem").value = dsHocVien[viTriCapNhat].diem;
+            let gioi_Tinh = document.getElementById("gtNam").checked = dsHocVien[viTriCapNhat].gioiTinh;
+            // console.log(ho_Ten,so_Dien_Thoai,diem,gioi_Tinh);
+            // console.log( Object.keys(dsHocVien[viTriCapNhat]));
+            // console.log( dsHocVien[viTriCapNhat]);
+
+        }
+        function capNhat() {
+            let vi_Tri_Cap_Nhat = docThongTinHocVienTuLocalStorage(VT_CAP_NHAT_HOC_VIEN);
+
+            dsHocVien[vi_Tri_Cap_Nhat].hoTen = document.getElementById("hoTen").value;
+            dsHocVien[vi_Tri_Cap_Nhat].soDienThoai = document.getElementById("soDienThoai").value;
+            dsHocVien[vi_Tri_Cap_Nhat].diem = document.getElementById("diem").value;
+            dsHocVien[vi_Tri_Cap_Nhat].gioiTinh = document.getElementById("gtNam").checked;
+            //console.log(dsHocVien[vi_Tri_Cap_Nhat].hoTen);
+            localStorage.setItem(DS_HOC_VIEN_KEY, JSON.stringify(dsHocVien));
+            hienThiDanhSachHocVien();
+
+        }
+
 
         function xoaHocVien(viTriXoa) {
             let xacNhanXoa = confirm(`bạn có muốn xóa user này ? \n bấm "OK" để xác nhận.`);
@@ -329,24 +364,24 @@
             hienThiDanhSachHocVien();
             console.log(dsHocVien);
         }
-        function xoaHocVienTimDuoc(viTriXoa) {
+        function xoaHocVienTimDuoc(vtXoa) {
             let dsHocVienTimDuoc = docThongTinHocVienTuLocalStorage(DS_HOC_VIEN_KEY_TEMP);
-            let xacNhanXoa = confirm(`bạn có muốn xóa user này ? \n bấm "OK" để xác nhận.`);
+            let xacNhanXoa = confirm(`bạn có muốn xóa user này ${vtXoa}? \n bấm "OK" để xác nhận.`);
             if (xacNhanXoa == true) {
-                for (let i in dsHocVienTimDuoc) {
-                    //dsHocVienTimDuoc.splice(i, 1);
-                    //dsHocVien.splice(viTriXoa, 1);
-
-                    //localStorage.setItem(DS_HOC_VIEN_KEY, JSON.stringify(dsHocVien));
-                    console.log("vị trí thật trong danh sách HV", viTriXoa, i);
-                    console.log(xacNhanXoa);
-                }
-
-            } else {
+                dsHocVienTimDuoc.splice(vtXoa, 1);
+                dsHocVien.splice(vtXoa, 1);
+                localStorage.setItem(DS_HOC_VIEN_KEY_TEMP, JSON.stringify(dsHocVienTimDuoc));
+                localStorage.setItem(DS_HOC_VIEN_KEY, JSON.stringify(dsHocVien));
+                console.log("vị trí thật trong danh sách HV", vtXoa);
+                //console.log(xacNhanXoa);
+                console.log(vtXoa);
+                timKiemHocVienTheoTen();
+            }
+            else {
                 console.log(xacNhanXoa);
             }
-            hienThiTimKiem();
-            console.log(dsHocVien);
+
+            console.log(dsHocVienTimDuoc);
         }
 
         function hienThiDanhSachHocVien() {
